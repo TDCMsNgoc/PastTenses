@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Trắc nghiệm 20 câu - Các thì Quá khứ (Past Tenses)</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo.png" type="image/png">
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="quiz-header">
+      <div class="header-left">
+        <img src="logo.png" alt="Trường Cao Đẳng Công Nghệ Thủ Đức" class="school-logo">
+      </div>
+
+      <div class="header-right">
+        <div class="timer-badge" id="topTimer">00 : 27 : 02</div>
+        <div class="header-actions-row">
+          <div class="curr-q-badge" id="topQuestionIndicator">Câu 1</div>
+          <button class="btn-flag" id="btnFlag" title="Đánh dấu cờ để xem lại sau">
+            <span class="flag-icon">🚩</span> <span id="flagBtnText">Đặt cờ</span>
+          </button>
+          <button class="btn-review-all" id="btnReviewAll" title="Xem danh sách tổng quan 20 câu">
+            📖 <span>Ôn 20 câu</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN QUIZ AREA -->
+    <main class="quiz-main" id="quizMainSection">
+      <!-- PALETTE: Grid of Question Numbers 1-20 (Left on Desktop, Bottom on iPad/Mobile) -->
+      <aside class="quiz-palette-sidebar" id="paletteSidebar">
+        <div class="palette-box">
+          <div class="palette-title">
+            <span>DANH SÁCH CÂU HỎI</span>
+            <div class="palette-legend">
+              <span class="legend-item"><span class="legend-dot" style="background:#ef4444; border:1px solid #dc2626;"></span> Đang chọn</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#0284c7;"></span> Đã làm</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#3898ec;"></span> Chưa làm</span>
+            </div>
+          </div>
+          <div class="question-grid" id="questionGrid">
+            <!-- Dynamically populated 20 buttons -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- CONTENT: Question Card & Answer Options Card -->
+      <section class="quiz-content-area" id="quizContentArea">
+        <!-- Top Card: Question Prompt -->
+        <div class="question-card">
+          <div class="question-text" id="questionText">
+            <strong>Câu 1:</strong> Đang tải dữ liệu câu hỏi...
+          </div>
+        </div>
+
+        <!-- Middle Separator Dots -->
+        <div class="card-separator">...</div>
+
+        <!-- Bottom Card: Options -->
+        <div class="answers-card" id="answersCard">
+          <!-- Dynamically populated options A, B, C, D -->
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER / CONTROLS -->
+    <footer class="quiz-footer" id="quizFooter">
+      <div class="footer-left">
+        <button class="btn-submit" id="btnSubmit">Kết thúc và Nộp bài</button>
+        <div class="footer-meta">
+          <span class="footer-timer" id="bottomTimer">00 : 27 : 02</span>
+          <span class="footer-version">v 1.8.5</span>
+        </div>
+      </div>
+
+      <div class="footer-center">
+        <button class="btn-prev" id="btnPrev">Câu trước</button>
+        <span class="status-counter" id="statusCounter">Đã làm: 0/20</span>
+      </div>
+
+      <div class="footer-right">
+        <button class="btn-next" id="btnNext">Câu tiếp theo</button>
+      </div>
+    </footer>
+
+    <!-- RESULT & DETAILED REVIEW SCREEN (Initially hidden) -->
+    <section class="result-screen" id="resultScreen">
+      <div class="result-card">
+        <div class="result-badge" id="resultBadge">KẾT QUẢ BÀI THI</div>
+        <div class="score-display" id="scoreDisplay">0 / 20</div>
+        <div class="score-sub" id="scoreSub">Thang điểm 10: 0.0 Điểm</div>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-val" style="color: #10b981;" id="correctCount">0</div>
+            <div class="stat-label">Số câu đúng</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-val" style="color: #ef4444;" id="incorrectCount">0</div>
+            <div class="stat-label">Số câu sai</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-val" style="color: #0284c7;" id="timeSpent">00:00</div>
+            <div class="stat-label">Thời gian làm bài</div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn-restart" id="btnRestart">🔄 Làm lại bài thi</button>
+          <button class="btn-review-answers" id="btnToggleDetails">📖 Xem giải thích chi tiết 20 câu</button>
+        </div>
+      </div>
+
+      <!-- Detailed Review of 20 questions with past tense rules -->
+      <div class="review-list" id="reviewList" style="display: none;">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- MODAL: XÁC NHẬN NỘP BÀI -->
+    <div class="modal-overlay" id="submitModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Xác nhận kết thúc và Nộp bài</h3>
+          <button class="btn-close-modal" id="btnCloseSubmitModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-summary-box" id="modalSummaryBox">
+            <div class="summary-stat-row">
+              <span>Tổng số câu hỏi:</span>
+              <strong>20 câu</strong>
+            </div>
+            <div class="summary-stat-row">
+              <span>Số câu đã hoàn thành:</span>
+              <strong id="modalAnsweredCount" style="color: #0284c7;">0 / 20</strong>
+            </div>
+            <div class="summary-stat-row">
+              <span>Số câu chưa làm:</span>
+              <strong id="modalUnansweredCount" style="color: #eab308;">20 câu</strong>
+            </div>
+            <div class="summary-stat-row">
+              <span>Số câu đánh dấu cờ:</span>
+              <strong id="modalFlaggedCount" style="color: #ef4444;">0 câu</strong>
+            </div>
+          </div>
+          <p id="modalWarningText" style="font-size: 14px; color: #475569; line-height: 1.5;">
+            Bạn có chắc chắn muốn nộp bài ngay bây giờ? Sau khi nộp, bạn sẽ xem được điểm số và phần giải thích chi tiết.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-modal-cancel" id="btnModalCancel">Tiếp tục làm bài</button>
+          <button class="btn-modal-confirm" id="btnModalConfirm">Đồng ý Nộp bài</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: ÔN 20 CÂU (TỔNG QUAN) -->
+    <div class="modal-overlay" id="reviewAllModal">
+      <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+          <h3>Danh sách tổng quan 20 câu hỏi</h3>
+          <button class="btn-close-modal" id="btnCloseReviewAllModal">&times;</button>
+        </div>
+        <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+          <div id="overviewQuestionsList" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Render quick overview list -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-modal-confirm" id="btnCloseReviewAll">Đóng</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
